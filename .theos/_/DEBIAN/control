@@ -1,0 +1,10 @@
+Package: com.404meemr.darkpowerselector
+Name: DarkPowerSelector
+Depends: mobilesubstrate
+Architecture: iphoneos-arm
+Description: A dark mode for the PowerSelector app so that my eyes don’t suffer permament damage
+Maintainer: 404meemr
+Author: 404meemr
+Section: Tweaks
+Version: 1.0.0-2+debug
+Installed-Size: 120
