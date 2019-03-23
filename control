@@ -3,7 +3,7 @@ Name: DarkPowerSelector
 Depends: mobilesubstrate
 Version: 1.0.0
 Architecture: iphoneos-arm
-Description: A dark mode for the PowerSelector app so that my eyes don’t suffer permament damage
+Description: A dark mode for the PowerSelector app so that my eyes don’t suffer permanent damage
 Maintainer: 404meemr
 Author: 404meemr
 Section: Tweaks

@@ -1,4 +1,6 @@
 #line 1 "Tweak.xm"
+BOOL enabled;
+
 
 #include <substrate.h>
 #if defined(__clang__)
@@ -20,21 +22,57 @@
 #define _LOGOS_RETURN_RETAINED
 #endif
 
-@class UILabel; @class UIView; 
+@class UIView; @class UILabel; 
 static void (*_logos_orig$_ungrouped$UIView$setBackgroundColor$)(_LOGOS_SELF_TYPE_NORMAL UIView* _LOGOS_SELF_CONST, SEL, UIColor *); static void _logos_method$_ungrouped$UIView$setBackgroundColor$(_LOGOS_SELF_TYPE_NORMAL UIView* _LOGOS_SELF_CONST, SEL, UIColor *); static void (*_logos_orig$_ungrouped$UILabel$setTextColor$)(_LOGOS_SELF_TYPE_NORMAL UILabel* _LOGOS_SELF_CONST, SEL, UIColor *); static void _logos_method$_ungrouped$UILabel$setTextColor$(_LOGOS_SELF_TYPE_NORMAL UILabel* _LOGOS_SELF_CONST, SEL, UIColor *); 
 
-#line 1 "Tweak.xm"
+#line 3 "Tweak.xm"
 
-static void _logos_method$_ungrouped$UIView$setBackgroundColor$(_LOGOS_SELF_TYPE_NORMAL UIView* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, UIColor * textColor) {
-_logos_orig$_ungrouped$UIView$setBackgroundColor$(self, _cmd, [UIColor colorWithRed:0.00 green:0.00 blue:0.00 alpha:0.00]);
+  static void _logos_method$_ungrouped$UIView$setBackgroundColor$(_LOGOS_SELF_TYPE_NORMAL UIView* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, UIColor * textColor) {
+      if (enabled) {
+          _logos_orig$_ungrouped$UIView$setBackgroundColor$(self, _cmd, [UIColor colorWithRed:0.00 green:0.00 blue:0.00 alpha:0.00]);
+      } else {
+          _logos_orig$_ungrouped$UIView$setBackgroundColor$(self, _cmd, textColor);
+      }
+  }
+
+
+
+  static void _logos_method$_ungrouped$UILabel$setTextColor$(_LOGOS_SELF_TYPE_NORMAL UILabel* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, UIColor * textColor) {
+    if (enabled) {
+      _logos_orig$_ungrouped$UILabel$setTextColor$(self, _cmd, [UIColor whiteColor]);
+    } else {
+      _logos_orig$_ungrouped$UILabel$setTextColor$(self, _cmd, textColor);
+    }
+  }
+
+
+static void loadPrefs() {
+NSString *preferencesPath = @"/User/Library/Preferences/com.404meemr.DarkPowerSelectorPrefs.plist";
+NSMutableDictionary *preferences = [[NSMutableDictionary alloc] initWithContentsOfFile:preferencesPath];
+  if(!preferences) {
+    preferences = [[NSMutableDictionary alloc] init];
+    
+    [preferences setObject:[NSNumber numberWithBool:1] forKey:@"isEnabled"];
+    [preferences writeToFile:preferencesPath atomically:YES];
+  } else {
+    enabled = [[preferences objectForKey:@"isEnabled"] boolValue];
+  }
+[preferences release];
 }
 
 
-
-static void _logos_method$_ungrouped$UILabel$setTextColor$(_LOGOS_SELF_TYPE_NORMAL UILabel* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, UIColor * textColor) {
-_logos_orig$_ungrouped$UILabel$setTextColor$(self, _cmd, [UIColor whiteColor]);
+static NSString *nsNotificationString = @"com.lacertosusrepo.stellaeprefs/preferences.changed";
+static void notificationCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+  loadPrefs();
 }
 
+static __attribute__((constructor)) void _logosLocalCtor_9d1dd3f5(int __unused argc, char __unused **argv, char __unused **envp) {
+  NSAutoreleasePool *pool = [NSAutoreleasePool new];
+  loadPrefs();
+  notificationCallback(NULL, NULL, NULL, NULL, NULL);
+  CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, notificationCallback, (CFStringRef)nsNotificationString, NULL, CFNotificationSuspensionBehaviorCoalesce);
+  [pool release];
+}
 static __attribute__((constructor)) void _logosLocalInit() {
 {Class _logos_class$_ungrouped$UIView = objc_getClass("UIView"); MSHookMessageEx(_logos_class$_ungrouped$UIView, @selector(setBackgroundColor:), (IMP)&_logos_method$_ungrouped$UIView$setBackgroundColor$, (IMP*)&_logos_orig$_ungrouped$UIView$setBackgroundColor$);Class _logos_class$_ungrouped$UILabel = objc_getClass("UILabel"); MSHookMessageEx(_logos_class$_ungrouped$UILabel, @selector(setTextColor:), (IMP)&_logos_method$_ungrouped$UILabel$setTextColor$, (IMP*)&_logos_orig$_ungrouped$UILabel$setTextColor$);} }
-#line 12 "Tweak.xm"
+#line 50 "Tweak.xm"
