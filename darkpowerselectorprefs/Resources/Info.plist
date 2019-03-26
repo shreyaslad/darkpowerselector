@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>DarkPowerSelector</string>
+	<string>DarkPowerSelectorPrefs</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.404meemr.DarkPowerSelectorPrefs</string>
 	<key>CFBundleInfoDictionaryVersion</key>
