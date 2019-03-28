@@ -10,6 +10,10 @@ BOOL enabled;
   }
 %end
 
+%hook UIButton
+  %orig;
+%end
+
 %hook UILabel
   -(void)setTextColor:(UIColor *)textColor {
     if (enabled) {
