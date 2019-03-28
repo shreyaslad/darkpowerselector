@@ -11,7 +11,9 @@ BOOL enabled;
 %end
 
 %hook UIButton
-  %orig;
+  -(void)setTextColor:(UIColor *)textColor {
+    %orig([UIColor blueColor]);
+  }
 %end
 
 %hook UILabel
