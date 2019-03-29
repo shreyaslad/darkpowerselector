@@ -95,10 +95,7 @@
 }
 
 - (void)respring {
-  NSTask *task = [[[NSTask alloc] init] autorelease];
-  [task setLaunchPath:@"/usr/bin/killall"];
-  [task setArguments:[NSArray arrayWithObjects:@"backboardd", nil]];
-  [task launch];
+  //do something here
 }
 
 @end
