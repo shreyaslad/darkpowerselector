@@ -22,8 +22,8 @@ BOOL enabled;
 #define _LOGOS_RETURN_RETAINED
 #endif
 
-@class UIView; @class UILabel; 
-static void (*_logos_orig$_ungrouped$UIView$setBackgroundColor$)(_LOGOS_SELF_TYPE_NORMAL UIView* _LOGOS_SELF_CONST, SEL, UIColor *); static void _logos_method$_ungrouped$UIView$setBackgroundColor$(_LOGOS_SELF_TYPE_NORMAL UIView* _LOGOS_SELF_CONST, SEL, UIColor *); static void (*_logos_orig$_ungrouped$UILabel$setTextColor$)(_LOGOS_SELF_TYPE_NORMAL UILabel* _LOGOS_SELF_CONST, SEL, UIColor *); static void _logos_method$_ungrouped$UILabel$setTextColor$(_LOGOS_SELF_TYPE_NORMAL UILabel* _LOGOS_SELF_CONST, SEL, UIColor *); 
+@class UIView; @class UILabel; @class UIButton; 
+static void (*_logos_orig$_ungrouped$UIView$setBackgroundColor$)(_LOGOS_SELF_TYPE_NORMAL UIView* _LOGOS_SELF_CONST, SEL, UIColor *); static void _logos_method$_ungrouped$UIView$setBackgroundColor$(_LOGOS_SELF_TYPE_NORMAL UIView* _LOGOS_SELF_CONST, SEL, UIColor *); static void (*_logos_orig$_ungrouped$UIButton$setTextColor$)(_LOGOS_SELF_TYPE_NORMAL UIButton* _LOGOS_SELF_CONST, SEL, UIColor *); static void _logos_method$_ungrouped$UIButton$setTextColor$(_LOGOS_SELF_TYPE_NORMAL UIButton* _LOGOS_SELF_CONST, SEL, UIColor *); static void (*_logos_orig$_ungrouped$UILabel$setTextColor$)(_LOGOS_SELF_TYPE_NORMAL UILabel* _LOGOS_SELF_CONST, SEL, UIColor *); static void _logos_method$_ungrouped$UILabel$setTextColor$(_LOGOS_SELF_TYPE_NORMAL UILabel* _LOGOS_SELF_CONST, SEL, UIColor *); 
 
 #line 3 "Tweak.xm"
 
@@ -33,6 +33,12 @@ static void (*_logos_orig$_ungrouped$UIView$setBackgroundColor$)(_LOGOS_SELF_TYP
       } else {
           _logos_orig$_ungrouped$UIView$setBackgroundColor$(self, _cmd, textColor);
       }
+  }
+
+
+
+  static void _logos_method$_ungrouped$UIButton$setTextColor$(_LOGOS_SELF_TYPE_NORMAL UIButton* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, UIColor * textColor) {
+    _logos_orig$_ungrouped$UIButton$setTextColor$(self, _cmd, [UIColor blueColor]);
   }
 
 
@@ -66,7 +72,7 @@ static void notificationCallback(CFNotificationCenterRef center, void *observer,
   loadPrefs();
 }
 
-static __attribute__((constructor)) void _logosLocalCtor_9d1dd3f5(int __unused argc, char __unused **argv, char __unused **envp) {
+static __attribute__((constructor)) void _logosLocalCtor_de956a09(int __unused argc, char __unused **argv, char __unused **envp) {
   NSAutoreleasePool *pool = [NSAutoreleasePool new];
   loadPrefs();
   notificationCallback(NULL, NULL, NULL, NULL, NULL);
@@ -74,5 +80,5 @@ static __attribute__((constructor)) void _logosLocalCtor_9d1dd3f5(int __unused a
   [pool release];
 }
 static __attribute__((constructor)) void _logosLocalInit() {
-{Class _logos_class$_ungrouped$UIView = objc_getClass("UIView"); MSHookMessageEx(_logos_class$_ungrouped$UIView, @selector(setBackgroundColor:), (IMP)&_logos_method$_ungrouped$UIView$setBackgroundColor$, (IMP*)&_logos_orig$_ungrouped$UIView$setBackgroundColor$);Class _logos_class$_ungrouped$UILabel = objc_getClass("UILabel"); MSHookMessageEx(_logos_class$_ungrouped$UILabel, @selector(setTextColor:), (IMP)&_logos_method$_ungrouped$UILabel$setTextColor$, (IMP*)&_logos_orig$_ungrouped$UILabel$setTextColor$);} }
-#line 50 "Tweak.xm"
+{Class _logos_class$_ungrouped$UIView = objc_getClass("UIView"); MSHookMessageEx(_logos_class$_ungrouped$UIView, @selector(setBackgroundColor:), (IMP)&_logos_method$_ungrouped$UIView$setBackgroundColor$, (IMP*)&_logos_orig$_ungrouped$UIView$setBackgroundColor$);Class _logos_class$_ungrouped$UIButton = objc_getClass("UIButton"); MSHookMessageEx(_logos_class$_ungrouped$UIButton, @selector(setTextColor:), (IMP)&_logos_method$_ungrouped$UIButton$setTextColor$, (IMP*)&_logos_orig$_ungrouped$UIButton$setTextColor$);Class _logos_class$_ungrouped$UILabel = objc_getClass("UILabel"); MSHookMessageEx(_logos_class$_ungrouped$UILabel, @selector(setTextColor:), (IMP)&_logos_method$_ungrouped$UILabel$setTextColor$, (IMP*)&_logos_orig$_ungrouped$UILabel$setTextColor$);} }
+#line 56 "Tweak.xm"
