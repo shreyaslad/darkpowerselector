@@ -18,16 +18,16 @@
 
 		label = [[UILabel alloc] initWithFrame:labelFrame];
 		[label setNumberOfLines:1];
-		label.font = [UIFont systemFontOfSize:50];
-		[label setText:@"DarkPowerSelector"];
+		label.font = [UIFont systemFontOfSize:32];
+		[label setText:@"Dark Power Selector"];
 		//[label setBackgroundColor:[UIColor clearColor]];
 		label.textColor = kTintColor;
 		label.textAlignment = NSTextAlignmentCenter;
 
 		underLabel = [[UILabel alloc] initWithFrame:underLabelFrame];
 		[underLabel setNumberOfLines:1];
-		underLabel.font = [UIFont systemFontOfSize:20];
-		[underLabel setText:@"yes"];
+		underLabel.font = [UIFont systemFontOfSize:14];
+		[underLabel setText:@"A simple dark mode for the PowerSelector app"];
 		//[underLabel setBackgroundColor:[UIColor clearColor]];
 		underLabel.textColor = [UIColor grayColor];
 		underLabel.textAlignment = NSTextAlignmentCenter;
@@ -45,6 +45,15 @@
 
 @implementation AXARootListController
 
+- (id)init {
+	self = [super init];
+	if (self) {
+    UIBarButtonItem *respringButton = [[UIBarButtonItem alloc] initWithTitle:@"Respring" style:UIBarButtonItemStylePlain target:self action:@selector(respring)];
+    self.navigationItem.rightBarButtonItem = respringButton;
+	}
+	return self;
+}
+	
 - (NSArray *)specifiers {
 	if (!_specifiers) {
 		_specifiers = [[self loadSpecifiersFromPlistName:@"Root" target:self] retain];
@@ -83,6 +92,13 @@
 	openURL:[NSURL URLWithString:@"https://reddit.com/u/404meemr"]
 	options:@{}
 	completionHandler:nil];
+}
+
+- (void)respring {
+  NSTask *task = [[[NSTask alloc] init] autorelease];
+  [task setLaunchPath:@"/usr/bin/killall"];
+  [task setArguments:[NSArray arrayWithObjects:@"backboardd", nil]];
+  [task launch];
 }
 
 @end
